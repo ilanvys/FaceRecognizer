@@ -1,0 +1,9 @@
+.wrapper {
+  /* background: (to right, rgb(76, 0, 255), rgb(0, 251, 255)); */
+  /* background-color: beige; */
+  background: linear-gradient(to right, rgb(0, 170, 255), rgb(255, 136, 0));
+}
+
+img {
+  padding-top: 6px;
+}
