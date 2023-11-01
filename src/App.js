@@ -42,12 +42,6 @@ class App extends Component {
     }})
   }
 
-  componentDidMount() {
-    fetch('http://localhost:3000/')
-    .then(res => res.json())
-    .then(console.log)
-  }
-
   onRouteChange = (route) => {
     if (route === 'signout') {
       this.setState(initialState);
@@ -81,7 +75,7 @@ class App extends Component {
 
   onPictureSubmit = (event) => {
     this.setState({ imageUrl: this.state.input });
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://peaceful-harbor-08529-4ec48043ac50.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -91,7 +85,7 @@ class App extends Component {
     .then(response => response.json())
     .then(data => {
       if (data) {
-        fetch('http://localhost:3000/image',{ 
+        fetch('https://peaceful-harbor-08529-4ec48043ac50.herokuapp.com/image',{ 
           method: 'put',
           headers: { 
             'Content-Type': 'application/json' 
