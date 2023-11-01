@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+//TODO: Unite Register and SignIn to one component - Form
 class SignIn extends Component {
   constructor(props) {
     super();
@@ -30,8 +31,7 @@ class SignIn extends Component {
     })
     .then(resp => resp.json())
     .then(user => {
-      if (user.id) {
-        console.log('user loaded:', user);
+      if (user.id) { //TODO: display an error messgae
         this.props.loadUser(user);
         this.props.onRouteChange('home');
       }

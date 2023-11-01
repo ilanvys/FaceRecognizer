@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import config from './config.json';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
@@ -11,60 +10,25 @@ import Register from './components/Register/Register';
 import './App.css';
 import ParticlesBg from 'particles-bg'
 
-
-const clarifyRequestOptions = (imageUrl) => {
-  const PAT = config.CLARIFY_API_KEY;
-  const USER_ID = 'ilanvys';       
-  const APP_ID = 'facerecognizer';
-  const IMAGE_URL = imageUrl;
-
-  const raw = JSON.stringify({
-      "user_app_id": {
-          "user_id": USER_ID,
-          "app_id": APP_ID
-      },
-      "inputs": [
-          {
-              "data": {
-                  "image": {
-                      "url": IMAGE_URL
-                  }
-              }
-          }
-      ]
-  });
-
-  const requestOptions = {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Key ' + PAT
-      },
-      body: raw
-  };
-
-  return requestOptions;
-
+const initialState = {
+  input: '',
+  imageUrl: '',
+  box: {},
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
 }
-
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      input: '',
-      imageUrl: '',
-      box: {},
-      route: 'signin',
-      isSignedIn: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    }
+    this.state = initialState;
   }
 
   loadUser = (data) => {
@@ -86,12 +50,12 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState({ isSignedIn: false })
+      this.setState(initialState);
     }
     else if (route === 'home') {
-      this.setState({ isSignedIn: true })
+      this.setState({ isSignedIn: true });
     }
-    this.setState({ route: route })
+    this.setState({ route: route });
   }
 
   calcFaceLocation = (data) => {
@@ -117,15 +81,18 @@ class App extends Component {
 
   onPictureSubmit = (event) => {
     this.setState({ imageUrl: this.state.input });
-
-    fetch("https://api.clarifai.com/v2/models/face-detection/outputs", 
-      clarifyRequestOptions(this.state.input))
+    fetch('http://localhost:3000/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
     .then(response => response.json())
     .then(data => {
       if (data) {
         fetch('http://localhost:3000/image',{ 
           method: 'put',
-          
           headers: { 
             'Content-Type': 'application/json' 
           },
@@ -137,10 +104,11 @@ class App extends Component {
         .then(count => {
             this.setState(Object.assign(this.state.user, { entries: count }))
         })
+        .catch(console.log);
         this.displayBox(this.calcFaceLocation(data));
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err)); //TODO: inform the user
   }
 
   render () {
