@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# Smart-Brain
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Smart-Brain** is a web application developed using React, part of the Zero to Mastery course. It's a simple face recognition app that allows users to detect faces in images provided by a URL. It also uses the Clarifai API for general image recognition, which provides a list of words describing the uploaded image.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Face detection in images.
+- General image recognition for image description.
+- User registration and sign-in.
+- User profile management.
+- Keeps track of the number of images processed.
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To get the **Smart-Brain** app up and running, you'll need both the front-end and the back-end:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Front-End (This Repository)
 
-### `npm test`
+Follow these steps to set up the front-end:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone this repository to your local system.
+2. Navigate to the project's root directory.
+3. Run `npm install` to install the project dependencies.
+4. Create an environment file (`.env`) with your API keys and database connection information.
+5. Start the app with `npm start`.
+6. Open your web browser and access the app at the chosen port.
 
-### `npm run build`
+### Back-End (Node.js Server)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You'll also need the back-end server for the app, which is available in a separate repository:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [SmartBrainAPI - Node.js Server](https://github.com/ilanvys/SmartBrainAPI)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Follow the instructions in the back-end repository to set up the server and ensure both the front-end and back-end are running simultaneously.
 
-### `npm run eject`
+## Technologies Used
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- [React](https://reactjs.org/)
+- [Clarifai Face Detection API](https://www.clarifai.com/)
+- [Clarifai General Image Recognition API](https://www.clarifai.com/)
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [PostgreSQL](https://www.postgresql.org/)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contributors
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Ilan Vysokovsky
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Acknowledgments
 
-## Learn More
+- [Zero to Mastery](https://zerotomastery.io/)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is open-source and available under the [MIT License](LICENSE).

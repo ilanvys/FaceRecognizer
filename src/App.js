@@ -11,8 +11,11 @@ import ParticlesBg from 'particles-bg'
 
 
 // TODO: Fix Registration in sign out V
-// TODO: Update Readme
-// TODO: Update title and icon
+// TODO: Update Readme V
+// TODO: Update title and icon V
+// TODO: update repo name
+// TODO: Fix Image messages if theres an error
+// TODO: Add a list to image recogintion
 // TODO: Make the design cleaner
 
 const initialState = {
@@ -116,7 +119,7 @@ class App extends Component {
     const { route, isSignedIn,imageUrl, box, user } = this.state;
     return (
       <div className='App'>
-        <ParticlesBg  type='cobweb' bg={true} blur={5} color='#a0d6eb'/>
+        <ParticlesBg  type='cobweb' bg={true} blur={5} color='#c2fff1'/>
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         {route === 'Home' ? 
           <div>
