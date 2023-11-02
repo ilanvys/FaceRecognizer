@@ -19,7 +19,7 @@ class SignIn extends Component {
   }
   // TODO: Display a message when email or password are wrong
   onSubmitSignIn = () => {
-    fetch('https://peaceful-harbor-08529-4ec48043ac50.herokuapp.com/signin', { 
+    fetch(`${process.env.REACT_APP_API_URL}/signin`, { 
       method: 'post',
       headers: { 
         'Content-Type': 'application/json' 

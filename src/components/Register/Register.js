@@ -25,7 +25,7 @@ class Register extends Component {
 
   // TODO: Display a message when email or password are wrong
   onSubmitRegister = () => {
-    fetch('https://peaceful-harbor-08529-4ec48043ac50.herokuapp.com/register', { 
+    fetch(`${process.env.REACT_APP_API_URL}/register`, { 
       method: 'post',
       headers: { 
         'Content-Type': 'application/json' 
@@ -44,6 +44,7 @@ class Register extends Component {
         this.props.onRouteChange('home');
       }
     })
+    .catch(console.log)
   }
 
   render () {

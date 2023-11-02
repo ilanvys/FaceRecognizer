@@ -10,6 +10,12 @@ import Register from './components/Register/Register';
 import './App.css';
 import ParticlesBg from 'particles-bg'
 
+
+// TODO: Fix Registration in sign out
+// TODO: Update Readme
+// TODO: Update title and icon
+// TODO: Make the design cleaner
+
 const initialState = {
   input: '',
   imageUrl: '',
@@ -29,6 +35,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = initialState;
+    console.log(process.env.REACT_APP_API_URL)
   }
 
   loadUser = (data) => {
@@ -54,7 +61,7 @@ class App extends Component {
 
   calcFaceLocation = (data) => {
     const image = document.getElementById('input-image');
-    const clarifyFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const clarifyFace = data.faceModelResponse[0].region_info.bounding_box;
     const width = Number(image.width);
     const height = Number(image.height);
     return {
@@ -75,7 +82,7 @@ class App extends Component {
 
   onPictureSubmit = (event) => {
     this.setState({ imageUrl: this.state.input });
-    fetch('https://peaceful-harbor-08529-4ec48043ac50.herokuapp.com/imageurl', {
+    fetch(`${process.env.REACT_APP_API_URL}/imageurl`, {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -85,7 +92,7 @@ class App extends Component {
     .then(response => response.json())
     .then(data => {
       if (data) {
-        fetch('https://peaceful-harbor-08529-4ec48043ac50.herokuapp.com/image',{ 
+        fetch(`${process.env.REACT_APP_API_URL}/image`,{ 
           method: 'put',
           headers: { 
             'Content-Type': 'application/json' 
