@@ -5,13 +5,12 @@ import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import SignIn from './components/SignIn/SignIn';
-import Register from './components/Register/Register';
+import Form from './components/Form/Form';
 import './App.css';
 import ParticlesBg from 'particles-bg'
 
 
-// TODO: Fix Registration in sign out
+// TODO: Fix Registration in sign out V
 // TODO: Update Readme
 // TODO: Update title and icon
 // TODO: Make the design cleaner
@@ -20,7 +19,7 @@ const initialState = {
   input: '',
   imageUrl: '',
   box: {},
-  route: 'signin',
+  route: 'Sign In',
   isSignedIn: false,
   user: {
     id: '',
@@ -50,10 +49,11 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
-    if (route === 'signout') {
+    if (route === 'Sign Out') {
       this.setState(initialState);
+      return;
     }
-    else if (route === 'home') {
+    else if (route === 'Home') {
       this.setState({ isSignedIn: true });
     }
     this.setState({ route: route });
@@ -113,24 +113,22 @@ class App extends Component {
   }
 
   render () {
-    const { route, isSignedIn,imageUrl, box } = this.state;
+    const { route, isSignedIn,imageUrl, box, user } = this.state;
     return (
       <div className='App'>
         <ParticlesBg  type='cobweb' bg={true} blur={5} color='#a0d6eb'/>
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-        {route === 'home' ? 
+        {route === 'Home' ? 
           <div>
             <Logo />
-            <Rank name={this.state.user.name} entries={this.state.user.entries} />
+            <Rank name={user.name} entries={user.entries} />
             <ImageLinkForm 
               onPictureSubmit={this.onPictureSubmit} 
               onInputChange={this.onInputChange} 
             />
             <FaceRecognition box={box} imageUrl={imageUrl} />
-          </div> 
-          : (route === 'signin') ? 
-            <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> :
-            <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          </div> :
+          <Form mode={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         }
       </div>
     );
