@@ -5,7 +5,7 @@ const FaceRecognition = ({ imageHeight, boxes, imageUrl }) => {
   return (
     imageUrl && (
       <div 
-        className='center ma image-wrapper shadow-5 w-70 br2 mt3-ns white' 
+        className='center ma image-wrapper shadow-5 w-50 br2 mt3-ns white' 
         style={{height: `${imageHeight + 30}px`}}
       >
         <div className='absolute mt2 mb4'>

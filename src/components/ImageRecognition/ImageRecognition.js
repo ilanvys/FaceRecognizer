@@ -5,7 +5,7 @@ import './ImageRecognition.css'
 const ImageRecognition = ({ items }) => {
   return (
     (items.length > 0) && (
-      <div className='items-wrapper center ma shadow-5 w-70 br2 mt3-ns white'>
+      <div className='items-wrapper center ma shadow-5 w-50 br2 mt3-ns white'>
         {items.map((item, index) => (
           <div 
             key={item}

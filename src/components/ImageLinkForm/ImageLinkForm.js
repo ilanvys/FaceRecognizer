@@ -4,7 +4,7 @@ import './ImageLinkForm.css'
 
 const ImageLinkForm = ({ input, errorMessage, onInputChange, onPictureSubmit }) => {
   return (
-    <div className='image-link-wrapper br2 mt2 center shadow-5 w-70 br2'>
+    <div className='image-link-wrapper br2 mt2 center shadow-5 w-50 br2'>
         <div className='center br2 w-100'>
           <div className='center pa4 br2 w-100'>
             <input className='f4 pa2 br2 w-70 center' type='text' value={input} onChange={onInputChange}/>
