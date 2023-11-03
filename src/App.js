@@ -1,28 +1,21 @@
 import React, { Component } from 'react';
 
-import Navigation from './components/Navigation/Navigation';
-import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import Rank from './components/Rank/Rank';
-import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import ImageRecognition from './components/ImageRecognition/ImageRecognition';
-import Form from './components/Form/Form';
 import './App.css';
-import ParticlesBg from 'particles-bg'
 
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import Form from './components/Form/Form';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import ImageRecognition from './components/ImageRecognition/ImageRecognition';
+import Logo from './components/Logo/Logo';
+import Navigation from './components/Navigation/Navigation';
+import ParticlesBg from 'particles-bg';
+import Rank from './components/Rank/Rank';
 
-// TODO: Fix Registration in sign out V
-// TODO: Update Readme V
-// TODO: Update title and icon V
-// TODO: update repo name V
-// TODO: Fix Image messages if theres an error V
-// TODO: Add Multiple faces recognition V
-// TODO: Add a list to image recogintion V
-// TODO: Make the design cleaner
 
 const initialState = {
   input: '',
   imageUrl: '',
+  imageHeight: '',
   errorMessage: '',
   boxes: [],
   items: [],
@@ -70,6 +63,8 @@ class App extends Component {
     const image = document.getElementById('input-image');
     const imageWidth = image.width;
     const imageHeight = image.height;
+    this.setState({ imageHeight: imageHeight });
+    
     const boundingBoxes = data.map(face => {
       const clarifyFace = face.region_info.bounding_box;
       return {
@@ -150,7 +145,18 @@ class App extends Component {
   }
 
   render () {
-    const { route, isSignedIn,imageUrl, boxes, items, user, input, errorMessage } = this.state;
+    const {
+      route,
+      isSignedIn,
+      imageUrl,
+      imageHeight,
+      boxes,
+      items,
+      user,
+      input,
+      errorMessage,
+    } = this.state;
+
     return (
       <div className='App'>
         <ParticlesBg  type='cobweb' bg={true} blur={5} color='#c2fff1'/>
@@ -166,7 +172,7 @@ class App extends Component {
                 onInputChange={this.onInputChange}
               />
               <ImageRecognition items={items} />
-              <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
+              <FaceRecognition boxes={boxes} imageUrl={imageUrl} imageHeight={imageHeight} />
           </div> :
           <Form mode={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         }

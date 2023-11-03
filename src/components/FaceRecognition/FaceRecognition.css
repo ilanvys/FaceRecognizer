@@ -6,3 +6,10 @@
   justify-content: center;
   cursor: pointer;
 }
+
+.image-wrapper {
+  position: relative;
+  background-color: rgb(48, 232, 191, 0.1);
+  backdrop-filter: blur(4px);
+  flex-wrap: wrap;
+}

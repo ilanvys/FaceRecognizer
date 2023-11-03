@@ -1,6 +1,7 @@
 import React from 'react';
 import './Rank.css';
 
+
 const Rank = ({ name, entries }) => {
   return (
     <div className='rank-wrapper'>
