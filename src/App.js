@@ -5,6 +5,7 @@ import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import ImageRecognition from './components/ImageRecognition/ImageRecognition';
 import Form from './components/Form/Form';
 import './App.css';
 import ParticlesBg from 'particles-bg'
@@ -13,15 +14,18 @@ import ParticlesBg from 'particles-bg'
 // TODO: Fix Registration in sign out V
 // TODO: Update Readme V
 // TODO: Update title and icon V
-// TODO: update repo name
-// TODO: Fix Image messages if theres an error
-// TODO: Add a list to image recogintion
+// TODO: update repo name V
+// TODO: Fix Image messages if theres an error V
+// TODO: Add Multiple faces recognition V
+// TODO: Add a list to image recogintion V
 // TODO: Make the design cleaner
 
 const initialState = {
   input: '',
   imageUrl: '',
-  box: {},
+  errorMessage: '',
+  boxes: [],
+  items: '',
   route: 'Sign In',
   isSignedIn: false,
   user: {
@@ -61,22 +65,30 @@ class App extends Component {
     }
     this.setState({ route: route });
   }
-
+  
   calcFaceLocation = (data) => {
     const image = document.getElementById('input-image');
-    const clarifyFace = data.faceModelResponse[0].region_info.bounding_box;
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: clarifyFace.left_col * width,
-      topRow: clarifyFace.top_row * height,
-      rightCol: width - (clarifyFace.right_col * width),
-      bottomRow: height - (clarifyFace.bottom_row * height)
-    }
+    const imageWidth = image.width;
+    const imageHeight = image.height;
+    const boundingBoxes = data.map(face => {
+      const clarifyFace = face.region_info.bounding_box;
+      return {
+        leftCol: clarifyFace.left_col * imageWidth,
+        topRow: clarifyFace.top_row * imageHeight,
+        rightCol: imageWidth - clarifyFace.right_col * imageWidth,
+        bottomRow: imageHeight - clarifyFace.bottom_row * imageHeight
+      };
+    });
+  
+    return boundingBoxes;
+  };
+
+  displayBoxes = (boxes) => {
+    this.setState({ boxes: boxes });
   }
 
-  displayBox = (box) => {
-    this.setState({ box: box });
+  displayItems = (items) => {
+    this.setState({ items: items.join(',') });
   }
 
   onInputChange = (event) => {
@@ -84,39 +96,61 @@ class App extends Component {
   }
 
   onPictureSubmit = (event) => {
-    this.setState({ imageUrl: this.state.input });
+    if (!this.state.input) {
+      this.setState({ errorMessage: 'Missing Image URL' });
+      return;
+    }
+
+    this.setState({ 
+      imageUrl: this.state.input,
+      errorMessage: '',
+      boxes: [],
+      items: ''
+    });
+    
     fetch(`${process.env.REACT_APP_API_URL}/imageurl`, {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          input: this.state.input
-        })
-      })
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ input: this.state.input })
+    })
     .then(response => response.json())
     .then(data => {
       if (data) {
-        fetch(`${process.env.REACT_APP_API_URL}/image`,{ 
+        fetch(`${process.env.REACT_APP_API_URL}/image`, { 
           method: 'put',
-          headers: { 
-            'Content-Type': 'application/json' 
-          },
-          body: JSON.stringify({
-            id: this.state.user.id
-          })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: this.state.user.id })
         })
         .then(resp => resp.json())
         .then(count => {
-            this.setState(Object.assign(this.state.user, { entries: count }))
+          if (isNaN(count)) {
+            this.setState({ errorMessage: `Error occurred. Couldn't update entries count.` });
+          } else {
+            this.setState(prevState => {
+              return {
+                user: {
+                  ...prevState.user,
+                  entries: count
+                },
+                input: ''
+              };
+            });
+          }
         })
-        .catch(console.log);
-        this.displayBox(this.calcFaceLocation(data));
+        .catch(err => {
+          this.setState({ errorMessage: `Error occurred. Couldn't update entries count.` });
+        });
+        this.displayBoxes(this.calcFaceLocation(data.faceModelResponse));
+        this.displayItems(data.imageRecognitionResponse);
       }
     })
-    .catch(err => console.log(err)); //TODO: inform the user
+    .catch(err => {
+      this.setState({ errorMessage: `Error occurred. Couldn't analyze image` });
+    });
   }
 
   render () {
-    const { route, isSignedIn,imageUrl, box, user } = this.state;
+    const { route, isSignedIn,imageUrl, boxes, items, user, input, errorMessage } = this.state;
     return (
       <div className='App'>
         <ParticlesBg  type='cobweb' bg={true} blur={5} color='#c2fff1'/>
@@ -126,10 +160,13 @@ class App extends Component {
             <Logo />
             <Rank name={user.name} entries={user.entries} />
             <ImageLinkForm 
+              errorMessage={errorMessage}
+              input={input}
               onPictureSubmit={this.onPictureSubmit} 
               onInputChange={this.onInputChange} 
             />
-            <FaceRecognition box={box} imageUrl={imageUrl} />
+            <ImageRecognition items={items} />
+            <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
           </div> :
           <Form mode={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         }
