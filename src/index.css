@@ -1,6 +1,11 @@
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../public/Quicksand-Regular.ttf');
+}
+
 body {
   margin: 0;
-  font-family: "Courier New", "Courier", monospace;
+  font-family: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(to right, rgb(48, 232, 191), rgb(255, 130, 53));

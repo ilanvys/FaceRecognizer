@@ -1,4 +1,22 @@
 nav {
   display: flex;
   justify-content: flex-end;
+  margin-right: 5px;
+}
+
+.nav-wrapper {
+  border-radius: .25rem;
+  border-style: solid; 
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0);
+  transition: border-color 1s ease;
+}
+
+.nav-wrapper:hover {
+  border-color: rgba(0, 0, 0, 1);
+}
+
+.signout {
+  position: absolute;
+  right: 5px;
 }

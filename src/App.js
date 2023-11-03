@@ -25,7 +25,7 @@ const initialState = {
   imageUrl: '',
   errorMessage: '',
   boxes: [],
-  items: '',
+  items: [],
   route: 'Sign In',
   isSignedIn: false,
   user: {
@@ -88,7 +88,7 @@ class App extends Component {
   }
 
   displayItems = (items) => {
-    this.setState({ items: items.join(',') });
+    this.setState({ items: items });
   }
 
   onInputChange = (event) => {
@@ -159,14 +159,14 @@ class App extends Component {
           <div>
             <Logo />
             <Rank name={user.name} entries={user.entries} />
-            <ImageLinkForm 
-              errorMessage={errorMessage}
-              input={input}
-              onPictureSubmit={this.onPictureSubmit} 
-              onInputChange={this.onInputChange} 
-            />
-            <ImageRecognition items={items} />
-            <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
+              <ImageLinkForm
+                errorMessage={errorMessage}
+                input={input}
+                onPictureSubmit={this.onPictureSubmit}
+                onInputChange={this.onInputChange}
+              />
+              <ImageRecognition items={items} />
+              <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
           </div> :
           <Form mode={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         }
