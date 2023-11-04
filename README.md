@@ -7,7 +7,6 @@
 - Face detection in images.
 - General image recognition for image description.
 - User registration and sign-in.
-- User profile management.
 - Keeps track of the number of images processed.
 
 ## Getting Started
